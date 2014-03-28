@@ -136,41 +136,42 @@ void vMotion(int x, int z) {
 }
 
 void tree(int x, int y, int z) {
-	/* Sapin les murs */
-	glColor3f(0, 1, 0);
-	glPushMatrix(); 
-		glTranslatef(x, y, z); 
-		glutWireCone(10., 30., 10, 10);
-		//glutSolidCone(10., 25., 10, 10);
-		//glutWireSphere(10., 10, 10);
-	glPopMatrix();
-
+	float ratio = 0.2;
+	int i;
+	float angle;
 	/* TRONC Arbre */
 	glColor3f(0.95, 0.7, 0.05);
 	glPushMatrix();
-
 		glTranslatef(x, y, 0);
 		glBegin(GL_LINE_LOOP);
-		glVertex3f(-2, 0, 0);
-		glVertex3f(2, 0, 0);
-		glVertex3f(2, 0, 10);
-		glVertex3f(-2, 0, 10);
+		glVertex3f(-(z*ratio), 0, 0);
+		glVertex3f((z*ratio), 0, 0);
+		glVertex3f((z*ratio), 0, z);
+		glVertex3f(-(z*ratio), 0, z);
 		glEnd();
 
 		/* Ligne milieu TRONC */
 		glBegin(GL_LINE_STRIP);
 		glVertex3f(0, 0, 0);
-		glVertex3f(0, 0, 10);
+		glVertex3f(0, 0, z);
 		glEnd();
 
 		/* Génération Arbre TRONC */
 		glBegin(GL_LINE_LOOP);
-		glVertex3f(0, -2, 0);
-		glVertex3f(0, 2, 0);
-		glVertex3f(0, 2, 10);
-		glVertex3f(0, -2, 10); 		
+		glVertex3f(0, -(z*ratio), 0);
+		glVertex3f(0, (z*ratio), 0);
+		glVertex3f(0, (z*ratio), z);
+		glVertex3f(0, -(z*ratio), z); 		
 		glEnd();
-		
+
+		/* Sapin les murs */
+		glColor3f(0, 1, 0);
+		glTranslatef(0, 0, z); 
+		/*glutWireCone(Largeur Base, Hauteur Cone, Nombre de Facette, Nombre de Facette) */
+		glutWireCone(z, 3 * z, z, z);
+
+		/*glutSolidCone(10., 25., 10, 10);
+		glutWireSphere(10., 10, 10);*/
 	glPopMatrix();
 }
 
@@ -190,8 +191,8 @@ void Affichage() {
 	tree(-30, 10, 10);
 	tree(-50, 40, 10);
 	tree(-50, 20, 10);
-	tree(15, -100, 10);
-	tree(20, 20, 50);
+	tree(15, -100, 100);
+	tree(-60, 40, 50);
 	/* LE SOLEILLLLLLL */
 	glPushMatrix();
 		glTranslatef(0,150,300); 
